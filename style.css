@@ -1,0 +1,25 @@
+html{
+    background-color: rgba(0, 255, 187, 0.352);
+}
+
+* {border: solid 1px rgb(255, 0, 0);
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 5rem;
+}
+.titulo h1{
+    color: blue;
+     font-family: "Audiowide", sans-serif;
+    font-size: 5rem;
+}
+.nav li{
+    color: chartreuse;
+}
+nav lu{
+    list-style: none;
+}
