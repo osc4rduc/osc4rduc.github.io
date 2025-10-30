@@ -1,8 +1,5 @@
 html{
-    background-color: rgba(0, 255, 187, 0.352);
-}
-
-* {border: solid 1px rgb(255, 0, 0);
+    background-color: #00305f;
 }
 
 main{
@@ -10,16 +7,47 @@ main{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-top: 5rem;
+    gap: 2rem;
+    min-height: 80vh;
 }
-.titulo h1{
-    color: blue;
-     font-family: "Audiowide", sans-serif;
-    font-size: 5rem;
+
+
+li a{
+    margin-block: 0.5rem;
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgb(255, 255, 255);
+    padding-inline: 1rem;
+    padding-block: 0.7rem;
+    border-radius: 5px;
+    border: #00dbc5;
+    transition: all 0.3s ease-in-out;
 }
-.nav li{
-    color: chartreuse;
+li a:hover{
+    background-color: #00dbc5;
+    color: black;
+    transform: scale(1.1);
+
 }
-nav lu{
+.titulo h1 {
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #00dbc5;
+}
+.titulo p {
+    font-family: "Kanit", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    color: #ffffff;
+    text-align: center;
+}
+.navegacion ul{
     list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Kanit", sans-serif;
 }
