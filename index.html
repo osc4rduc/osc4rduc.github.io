@@ -5,63 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bungee&family=WDXL+Lubrifont+SC&display=swap" rel="stylesheet">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bungee&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=WDXL+Lubrifont+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
-    <title>Oscar Duchitanga</title>
+    <title>Oscar Duchitanga - Portafolio</title>
 </head>
 <body>
+
+    <div class="antorcha" id="antorcha"></div>
+
     <main>
         <div class="titulo">
             <h1>Oscar Duchitanga</h1>
-              <p>Portafolios de curso de Código Creativo</p>
+            <p>Portafolios de curso de Código Creativo</p>
         </div>
         <nav class="navegacion">
-            <UL>
-                <li>
-                    <a href="https://osc4rduc.github.io/github/">Pelotas</a>
-                </li>
-                <li>
-                    <a href="https://osc4rduc.github.io/Sistema_de_Particulas_2025/">Examen Inter Ciclo</a>
-                </li>
-                <li>
-                    <a href="https://osc4rduc.github.io/uso-de-camara/">Uso de Cámara</a>
-                </li>
-                <li>
-                    <a href="https://osc4rduc.github.io/contraintuitivo/">Contraintuitivo</a>
-                </li>
-                <li>
-                    <a href="">Proyecto 5</a>
-                </li>
-            </UL>
+            <ul>
+                <li><a href="https://osc4rduc.github.io/github/">Pelotas</a></li>
+                <li><a href="https://osc4rduc.github.io/Sistema_de_Particulas_2025/">Examen Inter Ciclo</a></li>
+                <li><a href="https://osc4rduc.github.io/uso-de-camara/">Uso de Cámara</a></li>
+                <li><a href="https://osc4rduc.github.io/contraintuitivo/">Contraintuitivo</a></li>
+                <li><a href="#">Proyecto 5</a></li>
+            </ul>
         </nav>
     </main>
+
     <script>
-    document.addEventListener('mousemove', function(e) {
-        // Crear el elemento de la partícula
-        const particula = document.createElement('div');
-        particula.className = 'particula';
-        
-        // Posicionar la partícula en el mouse
-        // Usamos scroll para que funcione incluso si hay desplazamiento
-        const x = e.pageX;
-        const y = e.pageY;
-        
-        particula.style.left = x + 'px';
-        particula.style.top = y + 'px';
-        
-        // Añadir al cuerpo del documento
-        document.body.appendChild(particula);
-        
-        // Eliminar del DOM después de que termine la animación para no saturar el navegador
-        setTimeout(() => {
-            particula.remove();
-        }, 1000); // 1 segundo de vida
-    });
-</script>
+        const antorcha = document.getElementById('antorcha');
+
+        document.addEventListener('mousemove', (e) => {
+            // 1. Actualiza coordenadas para la antorcha en CSS
+            antorcha.style.setProperty('--x', e.clientX + 'px');
+            antorcha.style.setProperty('--y', e.clientY + 'px');
+
+            // 2. Crear pelotitas (Partículas)
+            const particula = document.createElement('div');
+            particula.className = 'particula';
+            
+            // Posicionamos la pelotita
+            particula.style.left = e.pageX + 'px';
+            particula.style.top = e.pageY + 'px';
+            
+            document.body.appendChild(particula);
+
+            // Eliminar después de la animación (0.8s)
+            setTimeout(() => {
+                particula.remove();
+            }, 800);
+        });
+    </script>
 </body>
 </html>
