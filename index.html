@@ -40,5 +40,28 @@
             </UL>
         </nav>
     </main>
+    <script>
+    document.addEventListener('mousemove', function(e) {
+        // Crear el elemento de la partícula
+        const particula = document.createElement('div');
+        particula.className = 'particula';
+        
+        // Posicionar la partícula en el mouse
+        // Usamos scroll para que funcione incluso si hay desplazamiento
+        const x = e.pageX;
+        const y = e.pageY;
+        
+        particula.style.left = x + 'px';
+        particula.style.top = y + 'px';
+        
+        // Añadir al cuerpo del documento
+        document.body.appendChild(particula);
+        
+        // Eliminar del DOM después de que termine la animación para no saturar el navegador
+        setTimeout(() => {
+            particula.remove();
+        }, 1000); // 1 segundo de vida
+    });
+</script>
 </body>
 </html>
