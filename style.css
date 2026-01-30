@@ -1,48 +1,40 @@
-html{
-    background-color: #00305f;
+/* --- CONFIGURACIÓN BASE --- */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Fondo negro total */
+    overflow-x: hidden;
+    cursor: none; /* Oculta el cursor para que las partículas sean el foco */
 }
 
-main{
+main {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2rem;
-    min-height: 80vh;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
 }
 
-
-li a{
-    margin-block: 0.5rem;
-    display: inline-block;
-    text-decoration: none;
-    background-color: rgb(255, 255, 255);
-    padding-inline: 1rem;
-    padding-block: 0.7rem;
-    border-radius: 5px;
-    border: #00dbc5;
-    transition: all 0.3s ease-in-out;
-}
-li a:hover{
-    background-color: #00dbc5;
-    color: black;
-    transform: scale(1.1);
-
-}
+/* --- TEXTOS --- */
 .titulo h1 {
     font-family: "Audiowide", sans-serif;
     font-weight: 400;
-    font-style: normal;
     color: #00dbc5;
+    margin-bottom: 0;
 }
+
 .titulo p {
     font-family: "Kanit", sans-serif;
     font-weight: 200;
-    font-style: normal;
     color: #ffffff;
     text-align: center;
 }
-.navegacion ul{
+
+/* --- NAVEGACIÓN --- */
+.navegacion ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -51,31 +43,65 @@ li a:hover{
     align-items: center;
     font-family: "Kanit", sans-serif;
 }
-/* Estilo base de la bolita */
-.particula {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: red; /* Color inicial */
-    border-radius: 50%;
-    pointer-events: none; /* Evita que las bolitas interfieran con los clics en tus enlaces */
-    transform: translate(-50%, -50%);
-    animation: desaparecer 1s forwards;
+
+li a {
+    margin-block: 0.5rem;
+    display: inline-block;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    padding: 0.7rem 1.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    pointer-events: auto; /* Permite clics a pesar de no tener cursor visual */
 }
 
-/* Animación: De rojo a amarillo, se encoge y se hace transparente */
+li a:hover {
+    background-color: #00dbc5;
+    transform: scale(1.1);
+}
+
+/* --- EFECTO ANTORCHA --- */
+.antorcha {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    /* La luz es un degradado radial que sigue las variables --x y --y */
+    background: radial-gradient(
+        circle 150px at var(--x, 50%) var(--y, 50%), 
+        transparent 10%, 
+        rgba(0, 0, 0, 0.96) 100%
+    );
+}
+
+/* --- EFECTO DE PELOTITAS (PARTÍCULAS) --- */
+.particula {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+    animation: desaparecer 0.8s forwards;
+}
+
 @keyframes desaparecer {
     0% {
-        transform: translate(-50%, -50%) scale(1);
         background-color: red;
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
     }
     50% {
-        background-color: yellow; /* Cambio de color a la mitad */
+        background-color: yellow;
     }
     100% {
-        transform: translate(-50%, -50%) scale(0.2);
         background-color: yellow;
-        opacity: 0; /* Desaparece */
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
     }
 }
