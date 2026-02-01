@@ -1,123 +1,101 @@
-/* --- CONFIGURACIÓN BASE --- */
+/* --- RESET --- */
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000; /* Fondo negro principal */
-    overflow: hidden; /* Evita barras de desplazamiento */
-    cursor: none; /* Oculta el cursor para que las partículas sean el foco */
+    background-color: #000;
     height: 100%;
     width: 100%;
+    overflow: hidden;
+    cursor: none;
 }
 
-/* El canvas de fondo */
+/* --- CAPAS (Z-INDEX) --- */
+
 #backgroundCanvas {
-    position: fixed; /* Ocupa todo el fondo */
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 0; /* Asegura que esté detrás de todo */
+    z-index: -1; /* Al fondo de todo */
     display: block;
 }
 
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 2rem;
-    min-height: 100vh;
-    position: relative; /* Para que esté por encima del canvas */
-    z-index: 1;
-    color: white; /* Asegura que el texto sea visible */
-    text-shadow: 0 0 5px rgba(0,255,0,0.5), 0 0 10px rgba(0,0,255,0.5); /* Sutil brillo para el texto */
-}
-
-/* --- TEXTOS --- */
-.titulo h1 {
-    font-family: "Audiowide", sans-serif;
-    font-weight: 400;
-    color: #00dbc5;
-    margin-bottom: 0;
-}
-
-.titulo p {
-    font-family: "Kanit", sans-serif;
-    font-weight: 200;
-    color: #ffffff;
-    text-align: center;
-}
-
-/* --- NAVEGACIÓN --- */
-.navegacion ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: "Kanit", sans-serif;
-}
-
-li a {
-    margin-block: 0.5rem;
-    display: inline-block;
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
-    backdrop-filter: blur(3px); /* Efecto de desenfoque si lo deseas */
-    color: white; /* Texto blanco para resaltar */
-    padding: 0.7rem 1.5rem;
-    border-radius: 5px;
-    border: 1px solid rgba(0,255,0,0.5); /* Borde verde claro */
-    transition: all 0.3s ease-in-out;
-    pointer-events: auto;
-}
-
-li a:hover {
-    background-color: rgba(0, 219, 197, 0.4); /* Hover más brillante */
-    border-color: #00dbc5;
-    transform: scale(1.1);
-}
-
-/* --- EFECTO ANTORCHA --- */
 .antorcha {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none;
-    z-index: 999;
-    /* La luz es un degradado radial que sigue las variables --x y --y */
+    pointer-events: none; /* CLAVE: Deja pasar los clics al menú */
+    z-index: 10; /* Visualmente encima para oscurecer */
     background: radial-gradient(
-        circle 150px at var(--x, 50%) var(--y, 50%), 
+        circle 180px at var(--x, 50%) var(--y, 50%), 
         transparent 10%, 
-        rgba(0, 0, 0, 0.96) 100%
+        rgba(0, 0, 0, 0.97) 100%
     );
 }
 
-/* --- EFECTO DE PELOTITAS (PARTÍCULAS DEL MOUSE) --- */
+main {
+    position: relative;
+    z-index: 20; /* Encima de la antorcha y el fondo para poder clickear */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 100vh;
+}
+
+/* --- ESTILOS DE ELEMENTOS --- */
+
+.titulo h1 {
+    font-family: "Audiowide", sans-serif;
+    color: #00dbc5;
+    margin: 0;
+}
+
+.titulo p {
+    font-family: "Kanit", sans-serif;
+    color: white;
+}
+
+.navegacion ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li a {
+    margin: 0.5rem;
+    padding: 0.8rem 2rem;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    font-family: "Kanit", sans-serif;
+    border-radius: 8px;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+li a:hover {
+    background-color: #00dbc5;
+    transform: scale(1.1);
+}
+
+/* Partículas del mouse */
 .particula {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 1000;
-    transform: translate(-50%, -50%);
+    z-index: 100; /* Siempre visibles */
     animation: desaparecer 0.8s forwards;
 }
 
 @keyframes desaparecer {
-    0% {
-        background-color: red;
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    50% {
-        background-color: yellow;
-    }
-    100% {
-        background-color: yellow;
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0;
-    }
+    0% { background-color: red; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { background-color: yellow; }
+    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
 }
