@@ -1,80 +1,59 @@
-/* --- BASE --- */
+/* --- CONFIGURACIÓN BASE --- */
 html, body {
     margin: 0;
     padding: 0;
-  
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    cursor: none;
-}
-
-/* --- CAPAS --- */
-
-#backgroundCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1; /* Al fondo */
-}
-
-.antorcha {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5; /* Por encima del fondo, pero debajo del texto */
-    pointer-events: none; /* Permite clics */
-    background: radial-gradient(
-        circle 180px at var(--x, 50%) var(--y, 50%), 
-        transparent 10%, 
-        rgba(0, 0, 0, 0.98) 100%
-    );
+    background-color: #000; /* Fondo negro total */
+    overflow-x: hidden;
+    cursor: none; /* Oculta el cursor para que las partículas sean el foco */
 }
 
 main {
-    position: relative;
-    z-index: 10; /* LA CAPA MÁS ALTA: Asegura que el texto y botones se vean */
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
     min-height: 100vh;
-    text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
-/* --- ELEMENTOS --- */
+/* --- TEXTOS --- */
 .titulo h1 {
     font-family: "Audiowide", sans-serif;
+    font-weight: 400;
     color: #00dbc5;
-    font-size: 3rem;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 .titulo p {
     font-family: "Kanit", sans-serif;
-    color: white;
-    font-size: 1.2rem;
+    font-weight: 200;
+    color: #ffffff;
+    text-align: center;
 }
 
+/* --- NAVEGACIÓN --- */
 .navegacion ul {
     list-style: none;
     padding: 0;
-    margin-top: 2rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Kanit", sans-serif;
 }
 
 li a {
+    margin-block: 0.5rem;
     display: inline-block;
-    margin: 0.5rem;
-    padding: 0.8rem 2rem;
+    text-decoration: none;
     background-color: white;
     color: black;
-    text-decoration: none;
-    font-family: "Kanit", sans-serif;
+    padding: 0.7rem 1.5rem;
     border-radius: 5px;
-    font-weight: bold;
-    transition: 0.3s;
+    transition: all 0.3s ease-in-out;
+    pointer-events: auto; /* Permite clics a pesar de no tener cursor visual */
 }
 
 li a:hover {
@@ -82,19 +61,47 @@ li a:hover {
     transform: scale(1.1);
 }
 
-/* Partículas */
+/* --- EFECTO ANTORCHA --- */
+.antorcha {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    /* La luz es un degradado radial que sigue las variables --x y --y */
+    background: radial-gradient(
+        circle 150px at var(--x, 50%) var(--y, 50%), 
+        transparent 10%, 
+        rgba(0, 0, 0, 0.96) 100%
+    );
+}
+
+/* --- EFECTO DE PELOTITAS (PARTÍCULAS) --- */
 .particula {
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 100;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
     animation: desaparecer 0.8s forwards;
 }
 
 @keyframes desaparecer {
-    0% { background-color: red; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    50% { background-color: yellow; }
-    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    0% {
+        background-color: red;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        background-color: yellow;
+    }
+    100% {
+        background-color: yellow;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
 }
