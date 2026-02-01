@@ -12,6 +12,8 @@
 </head>
 <body>
 
+    <canvas id="backgroundCanvas"></canvas>
+
     <div class="antorcha" id="antorcha"></div>
 
     <main>
@@ -31,6 +33,7 @@
     </main>
 
     <script>
+        // --- Efecto de Antorcha y Partículas ---
         const antorcha = document.getElementById('antorcha');
 
         document.addEventListener('mousemove', (e) => {
@@ -53,6 +56,88 @@
                 particula.remove();
             }, 800);
         });
+
+        // --- Fondo de Líneas Animadas ---
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d');
+        let lines = [];
+        const maxLines = 50; // Número máximo de líneas en pantalla
+        const lineSpeed = 1; // Velocidad de movimiento de las líneas
+        const lineColor = { r: 0, g: 255, b: 0 }; // Verde inicial (RGB)
+        const targetColor = { r: 0, g: 0, b: 255 }; // Azul final (RGB)
+        const colorTransitionSpeed = 0.005; // Velocidad de transición de color
+
+        // Ajusta el tamaño del canvas al tamaño de la ventana
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // Redibuja las líneas si la ventana cambia de tamaño
+            lines = lines.filter(line => line.x1 < canvas.width && line.y1 < canvas.height);
+        }
+
+        // Constructor para una nueva línea
+        class Line {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x1 = Math.random() * canvas.width;
+                this.y1 = Math.random() * canvas.height;
+                this.length = 50 + Math.random() * 100; // Longitud de la línea
+                this.angle = Math.random() * Math.PI * 2; // Dirección aleatoria
+                this.opacity = 1; // Opacidad inicial
+                this.vx = Math.cos(this.angle) * lineSpeed;
+                this.vy = Math.sin(this.angle) * lineSpeed;
+                this.color = { ...lineColor }; // Copia el color inicial
+            }
+
+            update() {
+                this.x1 += this.vx;
+                this.y1 += this.vy;
+                this.opacity -= 0.005; // Disminuir opacidad para que desaparezca
+
+                // Transición de color
+                this.color.g -= colorTransitionSpeed * (this.color.g - targetColor.g);
+                this.color.b -= colorTransitionSpeed * (this.color.b - targetColor.b);
+
+                if (this.opacity <= 0 || this.x1 < 0 || this.x1 > canvas.width || this.y1 < 0 || this.y1 > canvas.height) {
+                    this.reset(); // Reiniciar si desaparece o sale de la pantalla
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.x1, this.y1);
+                ctx.lineTo(this.x1 + this.vx * this.length, this.y1 + this.vy * this.length);
+                ctx.strokeStyle = `rgba(${Math.round(this.color.r)}, ${Math.round(this.color.g)}, ${Math.round(this.color.b)}, ${this.opacity})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        // Inicializa las líneas
+        for (let i = 0; i < maxLines; i++) {
+            lines.push(new Line());
+        }
+
+        // Bucle de animación
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpia el canvas
+            
+            lines.forEach(line => {
+                line.update();
+                line.draw();
+            });
+        }
+
+        // Event listener para redimensionar el canvas
+        window.addEventListener('resize', resizeCanvas);
+
+        // Llamar para configurar el tamaño inicial y comenzar la animación
+        resizeCanvas();
+        animate();
     </script>
 </body>
 </html>
